@@ -1,0 +1,24 @@
+{
+  "name": "yes",
+  "version": "1.0.0",
+  "description": "decsion app",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha --es_staging",
+    "start": "beefy js/index.js --index=js/index.html --live 9000"
+  },
+  "author": "Alicia",
+  "license": "ISC",
+  "devDependencies": {
+    "beefy": "^2.1.5",
+    "chai": "^3.5.0",
+    "mocha": "^2.4.5",
+    "mocha-parallel-tests": "^0.1.2",
+    "mocha-sinon": "^1.1.5",
+    "sinon": "^1.17.3",
+    "watchify": "^3.7.0"
+  },
+  "dependencies": {
+    "rx": "^4.0.7"
+  }
+}
