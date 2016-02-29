@@ -1,7 +1,9 @@
-
 var tally = require('./lunchify.js');
 
+/*--------------------------------------------------------------------------- */
+
 function tallyRestaurants() {
+
     var voteResults = tally.resturantsSelected.reduce(function (numberOfVotes, Restaurant) {
         if (numberOfVotes.hasOwnProperty(Restaurant)) {
             numberOfVotes[Restaurant]++;
@@ -14,20 +16,21 @@ function tallyRestaurants() {
     var voteResultsRestaurants = Object.keys(voteResults);
 
     var mostVoted = voteResultsRestaurants.reduce(function(previousValue, currentValue){
-        return voteResults[previousValue] > voteResults[currentValue]
-        ? previousValue
-        : currentValue;
+        return voteResults[previousValue] > voteResults[currentValue] ? previousValue
+                                                                      : currentValue;
     });
 
     var mostVotedResult = voteResultsRestaurants.filter(function(currentValue){
       return voteResults[currentValue] == voteResults[mostVoted];
     });
 
-    //TODO:20 ammened below to account for tie in results of tally
 
-    //console.log(mostVotedResult);
+    if(mostVotedResult.length > 1){
+      mostVotedResult.splice(mostVotedResult.length - 1, 0, "or");
+    }
+
     var finalResult = document.getElementById('results');
-    finalResult.innerHTML +=  mostVotedResult;
+    finalResult.innerHTML +=  'Looks like your going to ' + mostVotedResult.join(', ') + ' for lunch';
 
     return mostVotedResult.toString();
 }

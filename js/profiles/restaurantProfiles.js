@@ -1,26 +1,44 @@
+var Rx          = require('rx');
 var fewtAnswers = require("../lunchify/fewtAnswers.js");
-// var Rx = require('rx');
+
+/*--------------------------------------------------------------------------- */
 
 var loadRestaurants = function (){
-  var profiles = document.getElementById('profiles');
+  //elements needed
+  var restaurantsButton = document.getElementById('food-button');
+  var profiles          = document.getElementById('profiles');
+  var testProfile       = document.getElementById('test-results');
+  var profileImg        = '<img src="../imgs/fork.png" alt="" />';
 
-  if(profiles.firstChild){
-    profiles.innerHTML = '';
-  }
+  //click stream
+  var restaurantsButtonClicked = Rx.Observable.fromEvent(restaurantsButton, 'click');
 
-  //TODO:30 remove duplicates
-  //InProgress:0 display who voted under each restaurant
+  var whoVotedForWhatRestaurant = function(){
+    return Object.keys(fewtAnswers).reduce((accumulator, current) => {
+      var restaurant = fewtAnswers[current].restaurant;
+      if (accumulator.hasOwnProperty(restaurant)) {
+          accumulator[restaurant].push(current);
+      } else {
+        accumulator[restaurant] = [current];
+      }
+      return accumulator;
+    }, {});
+  };
 
-  Object.keys(fewtAnswers).forEach(function(person, i){
+  var whoVoted = whoVotedForWhatRestaurant();
 
-    var persons = fewtAnswers[person];
-    setTimeout(function() {
+  var createRestaurantProfile = function(){
+   Object.keys(whoVoted).map(restaurants => {
+      if (restaurants !== '') {
+        profiles.innerHTML += '<li id="details">' + profileImg + '<h2>' + restaurants + '</h2><p>'+ whoVoted[restaurants].join(', ') +'</p></li>';
+      }
+    });
+  };
 
-      var profileImg = '<img src="../imgs/fork.png" alt="" />';
-      profiles.innerHTML += '<li id="details">' + profileImg + '<h2>' + persons.restaurant + '</h2></li>';
-    }, i * 100);
-
+  restaurantsButtonClicked.subscribe(response => {
+    createRestaurantProfile();
   });
-};
+
+};//end of loadRestaurants
 
 module.exports = loadRestaurants;

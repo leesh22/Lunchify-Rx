@@ -11,7 +11,7 @@ var arrows =
       suggestionList.classList.add("otherclass2");
     }
   });
- 
+
   arrows.subscribe(response => {
     console.log(response);
   });

@@ -9,15 +9,14 @@ var lunchify = function(allPromises) {
       var resturantsSelected = allResturants.filter((empty) => empty !== "" && empty !== undefined);
       exports.resturantsSelected = resturantsSelected;
 
-      var whatRestaurant = (resturantsSelected.length > 0)
-          ? tallyRestaurants()
-          : "No Restaurant selected";
+      var whatRestaurant = (resturantsSelected.length > 0) ? tallyRestaurants()
+                                                           : "No Restaurant selected";
 
       return whatRestaurant;
 
   }, function(reason) {
       console.log(reason);
   });
-}
+};
 
 module.exports = lunchify;

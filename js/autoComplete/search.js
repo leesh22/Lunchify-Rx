@@ -1,9 +1,10 @@
 var Rx              = require('rx');
 var fewtAnswers     = require("../lunchify/fewtAnswers.js");
-var loadProfile     = require("../profiles/memberProfiles.js");
-var loadRestaurants = require("../profiles/restaurantProfiles.js");
-var addMember       = require("../profiles/addMember.js")
-var submitMember    = require("../profiles/submitMember.js")
+
+/*--------------------------------------------------------------------------- */
+
+//TODO: Create function so user can navigate suggestions with arrows - see arrows.js for starting point
+//TODO: Display results as a profile rather than a list
 
 /*--------------------------------------------------------------------------- */
 
@@ -45,46 +46,11 @@ var searchLunchify  = function () {
          .subscribe(val => { results.innerHTML = val; });
       });
 
-    keysPressed.filter(key =>{
-      return key.keyCode === 8 && inputField.value.length == 0;
+    //if the input field is empty after pressing backspace clear search results
+    keysPressed.filter(key => {
+      return key.keyCode === 8 && inputField.value.length === 0;
     }).subscribe(val => results.innerHTML = '');
 
-  //TODO:0 Create function so user can navigate suggestions with arrows - see arrows.js for starting point
-  //TODO:10 Display as a profile rather than a list
-
-/*--------------------------------------------------------------------------- */
-
-  // I think this will do best in its own file as it is not a search but a click and display
-  // One class, one thing rule - but will leave here for now for ease
-
-  var teamButton = document.getElementById('team-button');
-  var restaurantsButton = document.getElementById('food-button');
-
-  //event stream of buttons clicked
-  var teamButtonClicked = Rx.Observable.fromEvent(teamButton, 'click');
-  var restaurantsButtonClicked = Rx.Observable.fromEvent(restaurantsButton, 'click');
-
-  teamButtonClicked.subscribe(response =>{
-    loadProfile();
-    addMember();
-  });
-
-  restaurantsButtonClicked.subscribe(response =>{
-    loadRestaurants();
-  });
-
-/*--------------------------------------------------------------------------- */
-
-//adding a member, again best in its own page but ok here FOR NOW! :)
-
-  var formbutton = document.getElementById('form-sumbit');
-  var formbuttonClicked = Rx.Observable.fromEvent(formbutton, 'click');
-
-  formbuttonClicked.subscribe(response =>{
-    submitMember();
-    loadProfile();
-  });
-
-} //end of window.onload
+}; //end of window.onload
 
 module.exports = searchLunchify;
