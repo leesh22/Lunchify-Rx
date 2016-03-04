@@ -3,7 +3,6 @@ var fewtAnswers     = require("../lunchify/fewtAnswers.js");
 
 /*--------------------------------------------------------------------------- */
 
-//TODO: **IN PRROGRESS** Create function so user can navigate suggestions with arrows - see arrows.js for starting point
 //TODO: Display results as a profile rather than a list
 
 /*----------------------------------------------------------------------------*/
