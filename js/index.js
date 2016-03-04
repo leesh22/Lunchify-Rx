@@ -1,6 +1,7 @@
 var getAnswer       = require('./lunchify/getMemberAnswer.js');
 var lunchify        = require("./lunchify/lunchify.js");
 var fewtAnswers     = require("./lunchify/fewtAnswers.js");
+var searchArrowNavigation  = require("./autocomplete/arrows.js");
 var searchLunchify  = require("./autocomplete/search.js");
 var loadProfile     = require("./profiles/memberProfiles.js");
 var loadRestaurants = require("./profiles/restaurantProfiles.js");
@@ -14,11 +15,7 @@ lunchify(allResponses);
 
 window.onload = () => {
   searchLunchify();
+  searchArrowNavigation();
   loadProfile.loadProfile();
   loadRestaurants();
 };
-
-// fs.writeFile('helloworld.txt', 'Hello World!', function (err) {
-//   if (err) return console.log(err);
-//   console.log('Hello World > helloworld.txt');
-// });

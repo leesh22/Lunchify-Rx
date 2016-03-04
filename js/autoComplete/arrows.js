@@ -1,17 +1,38 @@
+var Rx              = require('rx');
+var fewtAnswers     = require("../lunchify/fewtAnswers.js");
 
+/*--------------------------------------------------------------------------- */
 
-var arrowsPressed = Rx.Observable.fromEvent(inputField, 'keydown');
+window.listIndex = -1;
 
-var arrows =
-  arrowsPressed.map(function(arrowPressed){
-    var suggestionList = document.getElementById('suggestion');
-    if(arrowPressed.keyCode === 38){
-      suggestionList.classList.add("otherclass");
-    } else if (arrowPressed.keyCode === 40) {
-      suggestionList.classList.add("otherclass2");
-    }
-  });
+function searchArrowNavigation() {
 
-  arrows.subscribe(response => {
-    console.log(response);
-  });
+  var inputField = document.getElementById('search-input');
+  var arrowPressed = Rx.Observable.fromEvent(inputField, 'keyup');
+
+  var Navigate = function(diff){
+
+    listIndex += diff;
+
+    var suggestionWrap   = document.getElementById('suggestions');
+    var suggestionLength = suggestionWrap.children.length;
+
+    if (listIndex >= suggestionLength) listIndex = 0;
+    if (listIndex < 0) listIndex = suggestionLength - 1;
+
+    var cssClass    = "suggestion-item-hover";
+    var suggestions = [].slice.call(document.querySelectorAll(".suggestion-item") || []);
+
+    suggestions.forEach(suggestion => { suggestion.classList.remove(cssClass);});
+    suggestions[listIndex].classList.add(cssClass);
+
+  };
+
+  var arrows = arrowPressed.map(arrowPressed => {
+    if(arrowPressed.keyCode === 40) Navigate(1);
+    if(arrowPressed.keyCode === 38) Navigate(-1);
+  }).subscribe();
+
+}
+
+module.exports = searchArrowNavigation;

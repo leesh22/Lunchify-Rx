@@ -35,7 +35,7 @@ function createProfile(){
     Object.keys(fewtAnswers).forEach((person, i) => {
       var persons = fewtAnswers[person];
       profiles.innerHTML +=
-        '<li id="details">' + profileImg + '<h2>' + person + '</h2><p>' + persons.answer + '</p><p>' + persons.restaurant +'</p></li>';
+        '<li id="details">' + profileImg + '<h2>' + person + '</h2><p>Attending?: ' + persons.answer + '</p><p>Choosen Restaurant: ' + persons.restaurant +'</p></li>';
     });
 
     var newMemberForm       = document.getElementById('add-member-form');

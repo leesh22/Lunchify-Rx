@@ -3,12 +3,12 @@ var fewtAnswers     = require("../lunchify/fewtAnswers.js");
 
 /*--------------------------------------------------------------------------- */
 
-//TODO: Create function so user can navigate suggestions with arrows - see arrows.js for starting point
+//TODO: **IN PRROGRESS** Create function so user can navigate suggestions with arrows - see arrows.js for starting point
 //TODO: Display results as a profile rather than a list
 
-/*--------------------------------------------------------------------------- */
+/*----------------------------------------------------------------------------*/
 
-var searchLunchify  = function () {
+function searchLunchify() {
 
   //elements
   var inputField  = document.getElementById('search-input');
@@ -40,8 +40,8 @@ var searchLunchify  = function () {
     return matches;
     }).distinctUntilChanged()
       .subscribe(matches => {
-        matches.take(2).reduce((accumulator, current) => {
-           return accumulator += '<li id="suggestion">' + current + '</li>';
+        matches.take(3).reduce((accumulator, current) => {
+           return accumulator += '<div id="suggestion" class="suggestion-item">' + current + '</div>';
          }, '')
          .subscribe(val => { results.innerHTML = val; });
       });
@@ -51,6 +51,6 @@ var searchLunchify  = function () {
       return key.keyCode === 8 && inputField.value.length === 0;
     }).subscribe(val => results.innerHTML = '');
 
-}; //end of window.onload
+} //end of searchLunchify
 
 module.exports = searchLunchify;
